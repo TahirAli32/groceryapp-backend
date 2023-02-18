@@ -1,6 +1,7 @@
 const express = require('express')
 const Order = require('../models/Order')
 const router = express.Router()
+const mongoose = require('mongoose')
 
 // Place New Order
 router.post('/new', async (req, res) => {
@@ -28,15 +29,25 @@ router.post('/update-status', async (req, res) => {
 	}
 })
 
-// Get All Order --- For Admin Only
+// Get All Order
 router.get('/', async (req, res) => {
+
+  const { userID } = req.query
   
 	try{
-    const orders = await Order.aggregate([
-			{ $sort: {"createdAt": -1 }},
-		])
-		res.send({orders})
-    
+    if(userID){
+      const orders = await Order.aggregate([
+        { $match: { "userID": mongoose.Types.ObjectId(userID) }},
+        { $sort: { "createdAt": -1 }},
+      ])
+      res.send({orders})
+    }
+    else{
+      const orders = await Order.aggregate([
+        { $sort: {"createdAt": -1 }},
+      ])
+      res.send({orders})
+    }
 	} catch(error){
 		res.send({error: error.message})
 	}
