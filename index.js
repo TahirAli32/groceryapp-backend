@@ -10,7 +10,7 @@ const server = createServer(app)
 
 dotenv.config()
 
-mongoose.connect(process.env.MONGODB_URI1)
+mongoose.connect(process.env.MONGODB_URI)
 
 app.use(express.json())
 
