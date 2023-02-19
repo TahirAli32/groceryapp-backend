@@ -62,14 +62,14 @@ router.post('/login', async (req, res) => {
 	)
 
 	res.status(200).send({
-		success: `Login Successful. User ID is ${user._id}`,
-    isAdmin: user.isAdmin,
+		success: `Login Successful`,
 		token,
-		tokenInfo: {
-			httpOnly: false,
-			secure: true,
-			sameSite: "strict",
-		}
+    userInfo: {
+      id: user._id,
+      name: user.name,
+      profileURL: user.profileURL,
+      isAdmin: user.isAdmin
+    }
 	})
 })
 

@@ -6,13 +6,13 @@ const app = express()
 const mongoose = require('mongoose')
 const { createServer } = require('http')
 
+const server = createServer(app)
+
 dotenv.config()
 
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI1)
 
 app.use(express.json())
-
-const server = createServer(app)
 
 app.use(cors())
 
